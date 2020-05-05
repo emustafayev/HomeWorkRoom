@@ -5,16 +5,21 @@ public class Room {
     private final FloorType floor;
     private final Color color;
     private final float price;
-    private int ID=0;
-    private static int counter=0;
+    private int ID;
 
-    public Room(int area, FloorType floor, Color color, float price) {
-        this.area = area;
+    public Room(int area, FloorType floor, Color color, float calcPrice) {
+        this.area  = area;
         this.floor = floor;
         this.color = color;
-        this.price=price;
-        ID+=counter++;
+        this.price = calcPrice;
     }
+
+    public Room(int id,int area, FloorType floor, Color color, float price) {
+       this(area,floor,color,price);
+        this.ID    = id;
+    }
+
+
 
     public int getArea() {
         return area;

@@ -18,7 +18,6 @@ import java.util.stream.Collectors;
 public class RoomServlet extends HttpServlet {
     TemplateEngine engine;
     RoomController roomController;
-    private HashMap<String, Object> data = new HashMap<>();
 
     public RoomServlet(TemplateEngine engine, RoomController controller) {
         this.engine=engine;
@@ -28,10 +27,7 @@ public class RoomServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        data.clear();
-        data.put("floor_types",Arrays.stream(FloorType.values()).collect(Collectors.toList()));
-        data.put("colors",Arrays.stream(Color.values()).collect(Collectors.toList()));
-        data.put("message","");
+        HashMap<String, Object> data = dataCreate("");
         engine.render("roomForm.ftl",data,resp);
     }
 
@@ -43,14 +39,18 @@ public class RoomServlet extends HttpServlet {
         String color = req.getParameter("color");
         String worker_count = req.getParameter("worker_count");
         String salary_per_worker = req.getParameter("salary");
-        String result = roomController.createRoom(width, height, floor_type, color, worker_count, salary_per_worker);
 
-        data.clear();
-        data.put("floor_types",Arrays.stream(FloorType.values()).collect(Collectors.toList()));
-        data.put("colors",Arrays.stream(Color.values()).collect(Collectors.toList()));
-        data.put("message",result);
-        System.out.println(result);
+        String result = roomController.createRoom(width, height, floor_type, color, worker_count, salary_per_worker);
+        HashMap<String, Object> data = dataCreate(result);
+
         engine.render("roomForm.ftl",data,resp);
     }
 
+    private HashMap<String, Object> dataCreate(String message){
+        HashMap<String, Object> data = new HashMap<>();
+        data.put("floor_types",Arrays.stream(FloorType.values()).collect(Collectors.toList()));
+        data.put("colors",Arrays.stream(Color.values()).collect(Collectors.toList()));
+        data.put("message",message);
+        return data;
+    }
 }

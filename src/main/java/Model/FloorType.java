@@ -2,7 +2,7 @@ package Model;
 
 public enum FloorType{
    Laminate(200),
-   Timber(250),
+   Green(250),
    Vinyl(240),
    Carpet(190),
    Bamboo(234);

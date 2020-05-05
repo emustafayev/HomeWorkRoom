@@ -6,6 +6,7 @@ import java.util.Optional;
 
 public interface IRoom {
     List<Room> getAllRooms();
-    void addRoom(Room room);
     Optional<Room> getRoom(int id);
+    void addRoom(Room room,int worker_count, int salary);
+    void deleteRoom(Room room);
 }
